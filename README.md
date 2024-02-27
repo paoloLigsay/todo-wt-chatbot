@@ -1,5 +1,4 @@
-![supabase-py-test](https://github.com/paoloLigsay/todo-wt-chatbot/assets/58755638/0124d7d7-0db8-4706-9e0c-a67855293cbd)![supabase-py-test](https://github.com/paoloLigsay/todo-wt-chatbot/assets/58755638/19661e1b-eb8a-42bd-bad4-be88a7055f0c)
-# Simple TODO
+# Simple Todo app
 
 A simple todo app with chatbot using NextJS, Supabase, Flask/Python and OpenAI.
 
