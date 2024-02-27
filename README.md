@@ -46,12 +46,14 @@ Kindly check the screenshot below of what the todo app currently looks like. App
 
 
 ## Todo
+General: Row level security is off since I don't have any auth in this app, turned it off so I can get and insert data/rows.
 
 ### Todo Related
-- Maybe the approach as I am refetching all todos after updating, can get only the returned data of added/updated item so I won't need to grab the whole list/rows, say if in case it'll have thousands of rows.
+1. Maybe the approach as I am refetching all todos after updating, can get only the returned data of added/updated item so I won't need to grab the whole list/rows, say if in case it'll have thousands of rows.
+2. Fix updateTodoModal and addTodoModal UI and the said issue in item 1.
 
 ### Chatbot Related
-- Accept input prompt from the user.
-- Query new prompts to GPT.
-- Throw GPT's response back to FE based on all previous chats and prompts.
+1. Accept input prompt from the user.
+2. Throw GPT's response back to FE based on all previous chats and prompts.
+3. Save everything to supabase. 
 
