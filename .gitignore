@@ -1,0 +1,42 @@
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Next.js
+/.next/
+/out/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pyc
+*.pyo
+*.pyd
+
+# Supabase
+/.supabase/
+
+# Virtual Environment
+venv/
+env/
+
+# IDE and Editor files
+.idea/
+.vscode/
+
+# Environment variables
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Server environment file
+server/.env
+
+# Miscellaneous
+.DS_Store
+Thumbs.db
+*.log
