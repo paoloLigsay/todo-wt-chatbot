@@ -2,3 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+.textarea::-webkit-scrollbar {
+  width: 4px;
+}
+
+/* Track */
+.textarea::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+/* Handle */
+.textarea::-webkit-scrollbar-thumb {
+  background-color: #32c4a2;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+.textarea::-webkit-scrollbar-thumb:hover {
+  background-color: darkred;
+}
