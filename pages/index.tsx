@@ -1,10 +1,10 @@
 import { Button } from 'antd';
 import React, { useEffect, useState } from 'react'
-import AddTodoModal from '../components/AddTodoModal';
-import UpdateTodoModal from '@/components/UpdateTodoModal';
+import AddTodoModal from '../components/modal/AddTodoModal';
+import UpdateTodoModal from '@/components/modal/UpdateTodoModal';
 import { Todo } from '@/models/todo';
 import ListItem from '@/components/ListItem';
-import Chatbot from '@/components/Chatbot';
+import Chatbot from '@/components/chatbot/Chatbot';
 
 function index() {
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -19,13 +19,13 @@ function index() {
         const { todos: todosFromAPI, error } = await res.json()
   
         if (error) {
-          console.log(`Error encountered: ${error}`);
+          console.error(`Error encountered: ${error}`);
           return;
         }
   
         setTodos(todosFromAPI);
       } catch (e) {
-        console.log(e);
+        console.error(e);
       }
     }
 
