@@ -33,7 +33,7 @@ const UpdateTodoModal = ({ openUpdateTodoModal, setOpenUpdateTodoModal, todoToUp
     const { todos: todosFromAPI, error } = await res.json()
 
     if (error) {
-      console.log(`Error encountered: ${error}`);
+      console.error(`Error encountered: ${error}`);
       return;
     }
 
@@ -44,6 +44,7 @@ const UpdateTodoModal = ({ openUpdateTodoModal, setOpenUpdateTodoModal, todoToUp
 
   return (
     <Modal
+      className='ant-modal-custom'
       open={openUpdateTodoModal}
       title="UPDATE TODO"
       onCancel={() => setOpenUpdateTodoModal(false)}
@@ -54,17 +55,18 @@ const UpdateTodoModal = ({ openUpdateTodoModal, setOpenUpdateTodoModal, todoToUp
           type="primary"
           loading={loading}
           onClick={(e) => handleUpdateTodo(e)}
+          className='mt-[16px] flex items-center justify-center py-[12px] px-[24px] bg-transparent border-[#64FFDA] text-white hover:!border-[#64FFDA] hover:!bg-[#64FFDA26] hover:!text-white'
         >
           Update
         </Button>
       ]}
     >
-      <p> add your new todo item. </p>
+      <p> Update your todo item in the todo list. </p>
       <Input
         placeholder='Todo name...'
         value={todoName}
         onChange={(e) => setTodoName(e.target.value)}
-        className='text-black'
+        className='text-black h-[40px]'
       />
     </Modal>
   )

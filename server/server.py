@@ -22,24 +22,64 @@ api_key: str = os.environ.get("OPENAI_API_KEY")
 
 @app.route('/api/generate', methods=['POST'])
 def generate_chat():
+  # Get id and name
+  data = request.get_json()
+
+  # Extract 'id' from the request data
+  prompts = data.get('prompts')
+  print("NEW PROMPT TEST: ", prompts)
+
   client = OpenAI()
-  print("RUNNING")
   response = client.chat.completions.create(
       model="gpt-3.5-turbo",
-      messages=[{"role": "user", "content": "Say it is a test."}],
+      messages=prompts,
       stream=True,
   )
 
   def generate():
     for chunk in response:
         print(chunk)
-        if chunk.choices:
+        if chunk.choices and chunk.choices[0].delta and chunk.choices[0].delta.content:
             delta_content = chunk.choices[0].delta.content
             yield delta_content.encode('utf-8')
             sys.stdout.flush()
             time.sleep(0.05)
 
   return Response(generate(), content_type='text/plain;charset=utf-8')
+
+# /api/todos: get chat
+@app.route('/api/chat', methods=['GET'])
+def return_chat():
+    try:
+      # Get todo items from supabase
+      chat = supabase.table("chat").select("*").order("id").execute()
+      return jsonify({
+        'chat': chat.data if chat.data else []
+      })
+    except Exception as e:
+      print(f"Error fetching data: {str(e)}")
+      return jsonify({'error': 'Internal Server Error'})
+
+# /api/todos: insert chat
+@app.route('/api/addchat', methods=['POST'])
+def return_addchat():
+    try:
+      # Get id and name
+      data = request.get_json()
+
+      # Extract 'role' and 'prompt' from the request data
+      prompt = data.get('prompt')
+      role = data.get('role')
+      supabase.table("chat").insert({ "role": role, "content": prompt }).execute()
+
+      # Get todo items from supabase
+      chat = supabase.table("chat").select("*").order("id").execute()
+      return jsonify({
+        'chat': chat.data if chat.data else []
+      })
+    except Exception as e:
+      print(f"Error fetching data: {str(e)}")
+      return jsonify({'error': 'Internal Server Error'})
 
 # /api/todos: get todos
 @app.route('/api/todos', methods=['GET'])

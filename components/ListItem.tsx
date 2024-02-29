@@ -16,7 +16,7 @@ const ListItem = ({ todo, setTodos, setTodoToUpdate, setOpenUpdateTodoModal }: L
     const { todos: todosFromAPI, error } = await res.json()
 
     if (error) {
-      console.log(`Error encountered: ${error}`);
+      console.error(`Error encountered: ${error}`);
       return;
     }
 

@@ -1,5 +1,5 @@
 import { AddTodoModal } from '@/models/modal';
-import { Button, Input, Modal } from 'antd';
+import { Button, Input, Modal, message } from 'antd';
 import React, { useState } from 'react'
 
 const AddTodoModal = ({ openModal, setOpenModal, setTodos }: AddTodoModal) => {
@@ -9,6 +9,12 @@ const AddTodoModal = ({ openModal, setOpenModal, setTodos }: AddTodoModal) => {
   const handleAddTodo = async (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     setLoading(true);
     e.preventDefault();
+
+    if (todoName === "") {
+      message.error("Todo name field is required.");
+      setLoading(false);
+      return;
+    }
 
     try {
       const res = await fetch('http://localhost:8080/api/addtodo', {
@@ -23,13 +29,13 @@ const AddTodoModal = ({ openModal, setOpenModal, setTodos }: AddTodoModal) => {
       const { todos: todosFromAPI, error } = await res.json()
   
       if (error) {
-        console.log(`Error encountered: ${error}`);
+        console.error(`Error encountered: ${error}`);
         return;
       }
   
       setTodos(todosFromAPI);
     } catch (e) {
-      console.log(e);
+      console.error(e);
     } finally {
       setOpenModal(false);
       setLoading(false);
@@ -38,6 +44,7 @@ const AddTodoModal = ({ openModal, setOpenModal, setTodos }: AddTodoModal) => {
 
   return (
     <Modal
+      className='ant-modal-custom'
       open={openModal}
       title="ADD TODO"
       onCancel={() => setOpenModal(false)}
@@ -48,17 +55,18 @@ const AddTodoModal = ({ openModal, setOpenModal, setTodos }: AddTodoModal) => {
           type="primary"
           loading={loading}
           onClick={(e) => handleAddTodo(e)}
+          className='mt-[16px] flex items-center justify-center py-[12px] px-[24px] bg-transparent border-[#64FFDA] text-white hover:!border-[#64FFDA] hover:!bg-[#64FFDA26] hover:!text-white'
         >
           Add
         </Button>
       ]}
     >
-      <p> add your new todo item. </p>
+      <p> Add your new action item in the todo list. </p>
       <Input
-        placeholder='Todo name...'
+        placeholder='Type your todo name here...'
         value={todoName}
         onChange={(e) => setTodoName(e.target.value)}
-        className='text-black'
+        className='text-black h-[40px]'
       />
     </Modal>
   )
