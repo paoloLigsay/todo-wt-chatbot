@@ -119,7 +119,7 @@ const Chatbot = () => {
         <ul className='custom-scroll overflow-x-hidden overflow-y-scroll max-h-[500px] min-h-[400px] p-[12px] pt-[20px] flex flex-col items-start'>
           <ChatItem message={{ id:"intialMessage", role: "assistant", content: "Hi! How can I help you today?" }} />
           {messages.map((message: Message) => (
-            <ChatItem message={{ id: message.id, role: message.role, content: message.content }} />
+            <ChatItem key={message.id} message={{ id: message.id, role: message.role, content: message.content }} />
           ))}
           {showStreamResponse && (
             <ChatItem message={{ id: "streamingResponse", role: "assistant", content: gptResponseMessage }} />
