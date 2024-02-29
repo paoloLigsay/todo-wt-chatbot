@@ -7,10 +7,7 @@ chat_bp = Blueprint('chat', __name__)
 
 @chat_bp.route('/api/generate', methods=['POST'])
 def generate_chat():
-  # Get id and name
   data = request.get_json()
-
-  # Extract 'id' from the request data
   prompts = data.get('prompts')
 
   client = OpenAI()
@@ -48,8 +45,10 @@ def return_chat():
 @chat_bp.route('/api/addchat', methods=['POST'])
 def return_addchat():
     try:
+      # add chat to supabase
       data = request.get_json()
       add_chat(data)
+      # Get todo items from supabase
       chat = get_chat()
       return jsonify({
         'chat': chat if chat else []

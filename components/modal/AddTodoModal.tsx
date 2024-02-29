@@ -51,7 +51,6 @@ const AddTodoModal = ({ openModal, setOpenModal, setTodos }: AddTodoModal) => {
         return;
       }
 
-      // Send and 
     } catch (e) {
       console.error(e);
     } finally {
