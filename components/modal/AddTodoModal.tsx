@@ -34,6 +34,23 @@ const AddTodoModal = ({ openModal, setOpenModal, setTodos }: AddTodoModal) => {
       }
   
       setTodos(todosFromAPI);
+      const emailResponse = await fetch('http://localhost:8080/api/email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          todo: todoName
+        }),
+      })
+
+      const { error: emailResponseError } = await emailResponse.json()
+  
+      if (emailResponseError) {
+        console.error(`Error encountered: ${error}`);
+        return;
+      }
+
     } catch (e) {
       console.error(e);
     } finally {
