@@ -2,8 +2,9 @@ import { Message } from '@/models/chat'
 import { AndroidOutlined, SendOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react'
 import ChatItem from './ChatItem';
+import { Todo } from '@/models/todo';
 
-const Chatbot = () => {
+const Chatbot = ({ todos }: { todos: Todo[] }) => {
   const [messages, setMessages] = useState<Message[]>([])
   const [gptResponseMessage, setGptResponseMessage] = useState<string>("");
   const [prompt, setPrompt] = useState<string>("");
@@ -41,6 +42,7 @@ const Chatbot = () => {
         },
         body: JSON.stringify({
           prompts,
+          todos,
         }),
       });
 
