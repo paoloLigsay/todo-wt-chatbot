@@ -1,6 +1,7 @@
 from openai import OpenAI
 from flask import Blueprint, jsonify, request, Response
-from utils.supabase import get_chat, add_chat
+from utils.supabase_fn import get_chat, add_chat
+from constants.gpt_system import generate_system
 import sys, time
 
 chat_bp = Blueprint('chat', __name__)
@@ -9,11 +10,16 @@ chat_bp = Blueprint('chat', __name__)
 def generate_chat():
   data = request.get_json()
   prompts = data.get('prompts')
+  todos = data.get('todos')
+
+  system_content = generate_system(todos)
+
+  messages = [{ "role": "system", "content": system_content }] + prompts
 
   client = OpenAI()
   response = client.chat.completions.create(
       model="gpt-3.5-turbo",
-      messages=prompts,
+      messages=messages,
       stream=True,
   )
 

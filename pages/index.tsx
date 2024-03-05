@@ -57,7 +57,7 @@ function index() {
       <ul className='mt-[64px]'>
         {todos.map((todo: Todo) => <ListItem key={todo.id} todo={todo} setTodos={setTodos} setTodoToUpdate={setTodoToUpdate} setOpenUpdateTodoModal={setOpenUpdateTodoModal} />)}
       </ul>
-      <Chatbot />
+      <Chatbot todos={todos} />
     </div>
   )
 }
