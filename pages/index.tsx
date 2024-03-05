@@ -5,12 +5,15 @@ import UpdateTodoModal from '@/components/modal/UpdateTodoModal';
 import { Todo } from '@/models/todo';
 import ListItem from '@/components/ListItem';
 import Chatbot from '@/components/chatbot/Chatbot';
+import { useRouter } from 'next/router';
 
 function index() {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [todoToUpdate, setTodoToUpdate] = useState<Todo>({} as Todo);
   const [openAddTodoModal, setOpenAddTodoModal] = useState(false);
   const [openUpdateTodoModal, setOpenUpdateTodoModal] = useState(false);
+
+  const route = useRouter()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -47,12 +50,21 @@ function index() {
       />
       <div className='flex justify-between'>
         <h1 className='text-2xl'> TODO LIST APP </h1>
+        <div className='flex'>
+        <Button
+          className='flex items-center justify-center mr-[12px] py-[12px] px-[24px] bg-transparent border-[#64FFDA] text-white hover:!border-[#64FFDA] hover:!bg-[#64FFDA26] hover:!text-white'
+          onClick={() => route.push("/users")}
+        >
+          View Users
+        </Button>
         <Button
           className='flex items-center justify-center py-[12px] px-[24px] bg-transparent border-[#64FFDA] text-white hover:!border-[#64FFDA] hover:!bg-[#64FFDA26] hover:!text-white'
           onClick={() => setOpenAddTodoModal(true)}
         >
-          ADD TODO
+          Add Todo
         </Button>
+        </div>
+
       </div>
       <ul className='mt-[64px]'>
         {todos.map((todo: Todo) => <ListItem key={todo.id} todo={todo} setTodos={setTodos} setTodoToUpdate={setTodoToUpdate} setOpenUpdateTodoModal={setOpenUpdateTodoModal} />)}

@@ -5,6 +5,7 @@ from urllib.parse import urlparse
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from supabase import create_client, Client
+from routes.user_route import user_bp
 from routes.todo_route import todo_bp
 from routes.chat_route import chat_bp
 from routes.email_route import email_bp
@@ -21,6 +22,7 @@ supabase: Client = create_client(url, key)
 app = Flask(__name__)
 CORS(app)
 
+app.register_blueprint(user_bp)
 app.register_blueprint(todo_bp)
 app.register_blueprint(chat_bp)
 app.register_blueprint(email_bp)
@@ -28,4 +30,3 @@ app.register_blueprint(scim_code_bp)
 
 if __name__ == "__main__":
   app.run(debug=True, port=8080)
-
