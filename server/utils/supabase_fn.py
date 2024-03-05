@@ -65,7 +65,9 @@ def get_groups():
 
 def get_users():
     try:
+        print("RUNNING")
         user_response = supabase.table("users").select("*").order("id").execute()
+        print("user_response", user_response)
         return user_response
     except Exception as e:
         raise RuntimeError(f"Error getting users by ids: {str(e)}")
@@ -108,6 +110,13 @@ def get_user_by_id(user_id):
 def insert_user(user):
     try:
         response = supabase.table("users").insert(user).execute() 
+        return response
+    except Exception as e:
+        raise RuntimeError(f"Error getting users by ids: {str(e)}")
+
+def handle_user_active_status(id, is_active):
+    try:
+        response = supabase.table("users").update({ "active": is_active }).eq("id", id).execute() 
         return response
     except Exception as e:
         raise RuntimeError(f"Error getting users by ids: {str(e)}")

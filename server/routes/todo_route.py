@@ -1,6 +1,6 @@
 # todo_routes.py
 from flask import Blueprint, jsonify, request
-from utils.supabase_fn import get_todos, update_todo, delete_todo, add_todo
+from utils.supabase_fn import get_users, get_todos, update_todo, delete_todo, add_todo
 
 todo_bp = Blueprint('todos', __name__)
 

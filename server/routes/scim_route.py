@@ -1,6 +1,6 @@
 from flask import Blueprint
 from flask import Blueprint, jsonify, request
-from utils.supabase_fn import get_groups, get_users_by_ids, get_users_by_username, get_users, insert_user, get_user_by_id
+from utils.supabase_fn import handle_user_active_status, get_groups, get_users_by_ids, get_users_by_username, get_users, insert_user, get_user_by_id
 from models.user import User
 from models.list_response import ListResponse
 from constants.scim import error_schema, list_response_schema, user_schema
@@ -57,6 +57,12 @@ def handle_groups():
   }
 
   return groups_response, 200
+
+@scim_code_bp.route("/scim/v2/Users/<id>", methods=['PATCH'])
+def handle_user(id):
+  if request.method == 'PATCH':
+    response = handle_user_active_status(id, False)
+    print(response)
 
 @scim_code_bp.route("/scim/v2/Users", methods=['GET', 'POST'])
 def handle_users():
@@ -118,9 +124,13 @@ def handle_users():
     # Check if the username/email already exists
     existing_username = get_users_by_username(new_user["userName"])
     existing_email = get_users_by_username(new_user["email"])
+    print("is Existing user active: ", existing_username.data.active)
 
-    if existing_username.data or existing_email.data:
+    if existing_username.data or existing_email.data and existing_username.data.active:
        return {"error": "account already exists."}, 409
+    elif existing_username.data or existing_email.data and not existing_username.data.active:
+      response = handle_user_active_status(id, True)
+      return {"error": "account already exists."}, 409
     else:
       response = insert_user(new_user)
       new_inserted_user = response.data[0] 
